@@ -1,17 +1,17 @@
-# j-api-generator
-An API generator that can easily export helpful api functions.
+# js-api-wrapper
+An API wrapper that can easily export helpful api functions.
 
 ## Getting started
 
-install the j-api-generator
+install the js-api-wrapper
 ```
-npm install j-api-generator
+npm install js-api-wrapper
 ```
 
-then export apis with the function `generate` in a module
+then export apis with the function `wrap` in a module
 
 ```
-import {generate} from 'j-api-generator';
+import {wrap} from 'js-api-wrapper';
 
 const defConfig = {}
 
@@ -20,10 +20,10 @@ const sufConfigs = {
     WithoutCache: {cache: false},
 }
 
-export default generate({defConfig, sufConfigs});
+export default wrap({defConfig, sufConfigs});
 ```
 
-then import the module, the generated function returns a `Promise` object.Example is shown as follows, where XXX is the name of the new module
+then import the module, the wrapped function returns a `Promise` object.Example is shown as follows, where XXX is the name of the new module
 
 ```
 import * as ApiUtils from XXX;

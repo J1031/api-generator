@@ -1,7 +1,7 @@
 {
-  "name": "j-api-generator",
-  "version": "0.0.2",
-  "description": "An API generator that can easily export helpful api functions.",
+  "name": "js-api-wrapper",
+  "version": "0.0.3",
+  "description": "An API wrapper that can easily export helpful api functions.",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src --plugins transform-object-rest-spread --presets babel-preset-es2015 --out-dir dist",
@@ -10,17 +10,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/J1031/api-generator.git"
+    "url": "git+https://github.com/J1031/js-api-wrapper.git"
   },
   "keywords": [
-    "j-api-generator"
+    "js-api-wrapper"
   ],
   "author": "J1031",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/J1031/api-generator/issues"
+    "url": "https://github.com/J1031/js-api-wrapper/issues"
   },
-  "homepage": "https://github.com/J1031/api-generator#readme",
+  "homepage": "https://github.com/J1031/js-api-wrapper#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",

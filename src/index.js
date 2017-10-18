@@ -4,7 +4,7 @@ import {extendDeep} from "./util/index";
 
 const METHOD_NAMES = ['GET', 'POST', 'PUT', 'DELETE'];
 
-export const generate = (config) => {
+export const wrap = (config) => {
     const defConfig = config['defConfig'] || {};
     const sufConfigs = config['sufConfigs'] || {};
     const methodPrefix = config['methodPrefix'] || 'json';
