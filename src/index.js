@@ -4,14 +4,65 @@ import {extendDeep} from "./util/index";
 
 const METHOD_NAMES = ['GET', 'POST', 'PUT', 'DELETE'];
 
+/**
+ * config metadata key
+ * @type {string}
+ */
+export const KEY_METADATA = '_';
+
+/**
+ * metadata order key
+ * @type {string}
+ */
+export const KEY_METADATA_ORDER = 'order';
+
+/**
+ * lowest order value which is the last key
+ * @type {number}
+ */
+export const METADATA_ORDER_LOWEST = 9999;
+
+/**
+ * default for config
+ * @type {string}
+ */
+export const KEY_CFG_DEFAULT = 'defConfig';
+
+/**
+ * suffix configs
+ * @type {string}
+ */
+export const KEY_CFG_SUFFIX = 'sufConfigs';
+
+/**
+ * method prefix, default to 'json'
+ * @type {string}
+ */
+export const KEY_CFG_METHOD_PREFIX = 'methodPrefix';
+
 export const wrap = (config) => {
-    const defConfig = config['defConfig'] || {};
-    const sufConfigs = config['sufConfigs'] || {};
-    const methodPrefix = config['methodPrefix'] || 'json';
+    const defConfig = config[KEY_CFG_DEFAULT] || {};
+    const sufConfigs = config[KEY_CFG_SUFFIX] || {};
+    const methodPrefix = config[KEY_CFG_METHOD_PREFIX] || 'json';
+
+    const getConfigOrder = (configKey) => {
+
+        if (sufConfigs[configKey] && sufConfigs[configKey][KEY_METADATA]) {
+            return sufConfigs[configKey][KEY_METADATA][KEY_METADATA_ORDER] || METADATA_ORDER_LOWEST;
+        }
+        return METADATA_ORDER_LOWEST;
+    };
+
+    const sortedSufConfigKeys = Object.keys(sufConfigs).sort(function (configA, configB) {
+        const orderA = getConfigOrder(configA);
+        const orderB = getConfigOrder(configB);
+
+        return orderA - orderB;
+    });
 
     return METHOD_NAMES
         .reduce((fns, method) => {
-            return Comb.power(Object.keys(sufConfigs))
+            return Comb.power(sortedSufConfigKeys)
                 .reduce((fs, sfs) => {
                     return {
                         ...fs,
@@ -24,20 +75,20 @@ export const wrap = (config) => {
 function factory(method, opts) {
     opts = opts || {};
 
-    const mConfig = opts['_'] || {};
-    delete opts['_'];
+    const mergedConfig = opts[KEY_METADATA] || {};
+    delete opts[KEY_METADATA];
 
     return function (url, data, options) {
 
-        url = getUrl(url, mConfig);
+        url = getUrl(url, mergedConfig);
 
-        return doRequest(method, opts, mConfig, url, data, options);
+        return doRequest(method, opts, mergedConfig, url, data, options);
     };
 }
 
-function getUrl(url, mConfig) {
+function getUrl(url, mergedConfig) {
 
-    const urlProcessors = mConfig['urlProcessors'];
+    const urlProcessors = mergedConfig['urlProcessors'];
     if (urlProcessors) {
         return Object.keys(urlProcessors)
             .reduce(function (url, processorName) {
