@@ -17,6 +17,12 @@ export const KEY_METADATA = '_';
 export const KEY_METADATA_ORDER = 'order';
 
 /**
+ * url processors key
+ * @type {string}
+ */
+export const KEY_METADATA_URL_PROCESSORS = 'urlProcessors';
+
+/**
  * lowest order value which is the last key
  * @type {number}
  */
@@ -88,7 +94,7 @@ function factory(method, opts) {
 
 function getUrl(url, mergedConfig) {
 
-    const urlProcessors = mergedConfig['urlProcessors'];
+    const urlProcessors = mergedConfig[KEY_METADATA_URL_PROCESSORS];
     if (urlProcessors) {
         return Object.keys(urlProcessors)
             .reduce(function (url, processorName) {
