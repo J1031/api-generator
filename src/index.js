@@ -1,6 +1,6 @@
 import * as Comb from './util/Comb';
 import {doRequest} from "./requestor/index";
-import {extendDeep} from "./util/index";
+import {extend} from "./util/index";
 
 const METHOD_NAMES = ['GET', 'POST', 'PUT', 'DELETE'];
 
@@ -108,6 +108,6 @@ function getUrl(url, mergedConfig) {
 const getConfigForSufs = (sfs, sufConfigs, defConfig) => {
 
     return sfs.reduce(function (result, suf) {
-        return extendDeep({}, result, sufConfigs[suf])
+        return extend(true, {}, result, sufConfigs[suf])
     }, {...defConfig})
 };
