@@ -1,6 +1,6 @@
 {
   "name": "js-api-wrapper",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "An API wrapper that can easily export helpful api functions.",
   "main": "dist/index.js",
   "scripts": {
