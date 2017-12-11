@@ -88,7 +88,14 @@ function factory(method, opts) {
 
         url = getUrl(url, mergedConfig);
 
-        return doRequest(method, opts, mergedConfig, url, data, options);
+        return doRequest(method, opts, mergedConfig, url, data, options)
+            .then(data => {
+                if(data instanceof String) {
+                    data = JSON.parse(data)
+                }
+
+                return data;
+            });
     };
 }
 
