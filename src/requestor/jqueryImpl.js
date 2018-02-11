@@ -21,7 +21,7 @@ export function doRequest(method, opts, mConfig, url, data, options) {
         if (data instanceof FormData) {
             extras.contentType = false;
             extras.processData = false;
-        } else if (data instanceof String) {
+        } else if (typeof data === 'string') {
             extras.processData = false;
         } else {
             data2Call = JSON.stringify(data);
