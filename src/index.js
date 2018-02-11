@@ -23,6 +23,12 @@ export const KEY_METADATA_ORDER = 'order';
 export const KEY_METADATA_URL_PROCESSORS = 'urlProcessors';
 
 /**
+ * data processors key
+ * @type {string}
+ */
+export const KEY_METADATA_DATA_PROCESSORS = 'dataProcessors';
+
+/**
  * lowest order value which is the last key
  * @type {number}
  */
@@ -88,9 +94,11 @@ function factory(method, opts) {
 
         url = getUrl(url, mergedConfig);
 
+        data = getData(data, mergedConfig);
+
         return doRequest(method, opts, mergedConfig, url, data, options)
             .then(data => {
-                if(data instanceof String) {
+                if (data instanceof String) {
                     data = JSON.parse(data)
                 }
 
@@ -110,6 +118,19 @@ function getUrl(url, mergedConfig) {
     }
 
     return url;
+}
+
+function getData(data, mergedConfig) {
+
+    const processors = mergedConfig[KEY_METADATA_DATA_PROCESSORS];
+    if (processors) {
+        return Object.keys(processors)
+            .reduce(function (data, processorName) {
+                return processors[processorName](data);
+            }, data);
+    }
+
+    return data;
 }
 
 const getConfigForSufs = (sfs, sufConfigs, defConfig) => {
